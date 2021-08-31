@@ -80,12 +80,16 @@ public class WordApp {
 		   {
 		      //[snip]
 			   Thread[] array = new Thread[noWords];
-			   w.j=0;
-			   array[0] = new Thread(w);
-			   array[0].start();
-			   w.j=1;
-			   array[1] = new Thread(w);
-			   array[1].start();
+			   for(int i=0;i<noWords;i++){
+				   array[i] = new Thread(w);
+				   array[i].start();
+			   }
+			//   w.j[0]=0;
+			 //  array[0].start();
+			 //  w.j=1;
+			 //  array[1] = new Thread(w);
+			 //  array[0].start();
+			 //  array[1].start();
 		      textEntry.requestFocus();  //return focus to the text entry field
 		   }
 		});

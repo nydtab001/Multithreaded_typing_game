@@ -4,13 +4,15 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class WordPanel extends JPanel implements Runnable{
-		public static volatile boolean done;
-	public int j;
+	public static volatile boolean done;
+	public int[] j;
+	public static AtomicInteger k = new AtomicInteger(0);
 	public WordRecord[] words;
 		private int noWords;
 		private int maxY;
@@ -29,6 +31,7 @@ public class WordPanel extends JPanel implements Runnable{
 		   //animation must be added 
 		    for (int i=0;i<noWords;i++){	    	
 		    	//g.drawString(words[i].getWord(),words[i].getX(),words[i].getY());
+				j[i]=i;
 		    	g.drawString(words[i].getWord(),words[i].getX(),words[i].getY()+20);  //y-offset for skeleton so that you can see the words
 		    }
 		   
@@ -38,20 +41,24 @@ public class WordPanel extends JPanel implements Runnable{
 			this.words=words; //will this work?
 			noWords = words.length;
 			done=false;
-			this.maxY=maxY;		
+			this.maxY=maxY;
+			j = new int[noWords];
 		}
 		
 		public void run() {
 			//add in code to animate this
-			while(!words[j].dropped()) {
-					words[j].drop(1);
+			int v = k.getAndIncrement();
+			WordRecord temp = words[v];
+			while(!temp.dropped()) {
+					temp.drop(10);
 					repaint();
 				try {
-					Thread.sleep(words[j].getSpeed());
+					Thread.sleep(temp.getSpeed());
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
+
 		}
 
 	}
