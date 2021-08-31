@@ -38,7 +38,7 @@ public class WordApp {
       JPanel g = new JPanel();
       g.setLayout(new BoxLayout(g, BoxLayout.PAGE_AXIS)); 
       g.setSize(frameX,frameY);
-    	
+
 		w = new WordPanel(words,yLimit);
 		w.setSize(frameX,yLimit+100);
 	   g.add(w); 
@@ -79,7 +79,13 @@ public class WordApp {
 		   public void actionPerformed(ActionEvent e)
 		   {
 		      //[snip]
-				w.run();
+			   Thread[] array = new Thread[noWords];
+			   w.j=0;
+			   array[0] = new Thread(w);
+			   array[0].start();
+			   w.j=1;
+			   array[1] = new Thread(w);
+			   array[1].start();
 		      textEntry.requestFocus();  //return focus to the text entry field
 		   }
 		});

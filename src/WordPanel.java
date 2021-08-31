@@ -8,9 +8,10 @@ import java.util.concurrent.CountDownLatch;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class WordPanel extends JPanel implements Runnable {
+public class WordPanel extends JPanel implements Runnable{
 		public static volatile boolean done;
-		private WordRecord[] words;
+	public int j;
+	public WordRecord[] words;
 		private int noWords;
 		private int maxY;
 
@@ -27,7 +28,7 @@ public class WordPanel extends JPanel implements Runnable {
 		   //draw the words
 		   //animation must be added 
 		    for (int i=0;i<noWords;i++){	    	
-		    	//g.drawString(words[i].getWord(),words[i].getX(),words[i].getY());	
+		    	//g.drawString(words[i].getWord(),words[i].getX(),words[i].getY());
 		    	g.drawString(words[i].getWord(),words[i].getX(),words[i].getY()+20);  //y-offset for skeleton so that you can see the words
 		    }
 		   
@@ -42,12 +43,11 @@ public class WordPanel extends JPanel implements Runnable {
 		
 		public void run() {
 			//add in code to animate this
-			int y_inc=maxY/(2*noWords);
-			while(!words[1].dropped()) {
-				try {
-					words[1].drop(y_inc);
-					Thread.sleep(100);
+			while(!words[j].dropped()) {
+					words[j].drop(1);
 					repaint();
+				try {
+					Thread.sleep(words[j].getSpeed());
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
