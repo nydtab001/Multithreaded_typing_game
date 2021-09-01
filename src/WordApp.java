@@ -27,11 +27,19 @@ public class WordApp {
 	static 	Score score = new Score();
 
 	static WordPanel w;
+
+	static boolean start;
 	
 	
 	
 	public static void setupGUI(int frameX,int frameY,int yLimit) {
 		// Frame init and dimensions
+		start=false;
+		Thread[] array = new Thread[noWords];
+		for (int i = 0; i < noWords; i++) {
+			array[i] = new Thread(w);
+			//	   array[i].start();
+		}
     	JFrame frame = new JFrame("WordGame"); 
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	frame.setSize(frameX, frameY);
@@ -79,17 +87,21 @@ public class WordApp {
 		   public void actionPerformed(ActionEvent e)
 		   {
 		      //[snip]
-			   Thread[] array = new Thread[noWords];
-			   for(int i=0;i<noWords;i++){
+			   for (int i = 0; i < noWords; i++) {
 				   array[i] = new Thread(w);
-				   array[i].start();
 			   }
-			//   w.j[0]=0;
-			 //  array[0].start();
-			 //  w.j=1;
-			 //  array[1] = new Thread(w);
-			 //  array[0].start();
-			 //  array[1].start();
+			   start=!start;
+			   //while(start) {
+				   for (int i = 0; i < noWords; i++) {
+					   //array[i] = new Thread(w);
+					   array[i].start();
+					//   System.out.println(array[i].isAlive());
+				   }
+			 /*  }else{
+				   for (int i = 0; i < noWords; i++) {
+					   array[i].start();
+				   }*/
+			   //}
 		      textEntry.requestFocus();  //return focus to the text entry field
 		   }
 		});

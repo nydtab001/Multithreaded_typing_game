@@ -14,8 +14,9 @@ public class WordPanel extends JPanel implements Runnable{
 	public int[] j;
 	public static AtomicInteger k = new AtomicInteger(0);
 	public WordRecord[] words;
-		private int noWords;
-		private int maxY;
+	private int noWords;
+	private int maxY;
+	private WordDictionary d;
 
 		
 		public void paintComponent(Graphics g) {
@@ -47,18 +48,24 @@ public class WordPanel extends JPanel implements Runnable{
 		
 		public void run() {
 			//add in code to animate this
-			int v = k.getAndIncrement();
-			WordRecord temp = words[v];
-			while(!temp.dropped()) {
+			while(true) {
+				int v = k.getAndIncrement();
+				if (v >= noWords) {
+					k = new AtomicInteger(0);
+					v = k.getAndIncrement();
+				}
+				WordRecord temp = words[v];
+				while (!temp.dropped()) {
 					temp.drop(10);
 					repaint();
-				try {
-					Thread.sleep(temp.getSpeed());
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+					try {
+						Thread.sleep(temp.getSpeed());
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
+				words[v].resetWord();
 			}
-
 		}
 
 	}
