@@ -28,13 +28,14 @@ public class WordApp {
 
 	static WordPanel w;
 
-	static boolean start;
+	static boolean start = false;
+	static boolean already_started = false;
+	static boolean pause = true;
 	
 	
 	
 	public static void setupGUI(int frameX,int frameY,int yLimit) {
 		// Frame init and dimensions
-		start=false;
 		Thread[] array = new Thread[noWords];
 		for (int i = 0; i < noWords; i++) {
 			array[i] = new Thread(w);
@@ -61,6 +62,7 @@ public class WordApp {
 	   w.missed = missed;
 	   w.caught = caught;
 	   w.scr = scr;
+	   w.totalwords=totalWords;
     
 	    //[snip]
   
@@ -68,9 +70,8 @@ public class WordApp {
 	   textEntry.addActionListener(new ActionListener()
 	   {
 	      public void actionPerformed(ActionEvent evt) {
-	         String text = textEntry.getText();
-	          //[snip]
-			  w.text=text;
+			  //[snip]
+			  w.text= textEntry.getText();
 	         textEntry.setText("");
 	         textEntry.requestFocus();
 	      }
@@ -83,7 +84,7 @@ public class WordApp {
 	    
 	   JPanel b = new JPanel();
       b.setLayout(new BoxLayout(b, BoxLayout.LINE_AXIS)); 
-	   JButton startB = new JButton("Start");;
+	   JButton startB = new JButton("Start/Pause");;
 		
 			// add the listener to the jbutton to handle the "pressed" event
 		startB.addActionListener(new ActionListener()
@@ -91,13 +92,21 @@ public class WordApp {
 		   public void actionPerformed(ActionEvent e)
 		   {
 		      //[snip]
-			   for (int i = 0; i < noWords; i++) {
-				   array[i] = new Thread(w);
-			   }
 			   start=!start;
-				   for (int i = 0; i < noWords; i++) {
-					   array[i].start();
-				   }
+			   if(start & !already_started) {
+			   		for (int i = 0; i < noWords; i++) {
+				   		array[i] = new Thread(w);
+			   		}
+				   	for (int i = 0; i < noWords; i++) {
+				   		array[i].start();
+				   	}
+				   	already_started=true;
+			   }else if(!start & already_started){
+			   		w.pause=true;
+			   }else if(start & already_started){
+			   		w.pause=false;
+			   }
+
 		      textEntry.requestFocus();  //return focus to the text entry field
 		   }
 		});
@@ -109,6 +118,13 @@ public class WordApp {
 		   public void actionPerformed(ActionEvent e)
 		   {
 		      //[snip]
+			   w = new WordPanel(words,yLimit);
+			   for (int i = 0; i < noWords; i++) {
+				   array[i] = new Thread(w);
+			   }
+			   for (int i = 0; i < noWords; i++) {
+				   array[i].start();
+			   }
 		   }
 		});
 		
@@ -164,7 +180,6 @@ public class WordApp {
 
 		int x_inc=(int)frameX/noWords;
 	  	//initialize shared array of current words
-		int y_inc=(int)frameY/noWords;
 
 		for (int i=0;i<noWords;i++) {
 			words[i]=new WordRecord(dict.getNewWord(),i*x_inc,yLimit);
