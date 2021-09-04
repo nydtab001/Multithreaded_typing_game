@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.*;
 
 public class WordPanel extends JPanel implements Runnable {
-	public static volatile boolean done;
+	public volatile boolean done;
 	public int[] j;
 	public static AtomicInteger k = new AtomicInteger(0);
 	public WordRecord[] words;
@@ -19,8 +19,9 @@ public class WordPanel extends JPanel implements Runnable {
 	public volatile JLabel scr = new JLabel("Score:" + score.getScore() + "    ");
 	public volatile boolean pause = false;
 	public int totalwords;
-	public static AtomicInteger wordcount = new AtomicInteger(0);
-	public static AtomicInteger threadsfinished = new AtomicInteger(0);
+	public AtomicInteger wordcount = new AtomicInteger(0);
+	public AtomicInteger threadsfinished = new AtomicInteger(0);
+	public volatile boolean reset = false;
 
 
 	public void paintComponent(Graphics g) {
@@ -39,7 +40,7 @@ public class WordPanel extends JPanel implements Runnable {
 			j[i] = i;
 			g.drawString(words[i].getWord(), words[i].getX(), words[i].getY());  //y-offset for skeleton so that you can see the words
 		}
-		if(threadsfinished.get()>=noWords){
+		if((threadsfinished.get()>=noWords)& done){
 			g.drawString("Caught: "+score.getCaught(),400,210);
 			g.drawString("Missed: "+score.getMissed(),400,234);
 			g.drawString("Your score: "+score.getScore(),400,258);
@@ -71,8 +72,10 @@ public class WordPanel extends JPanel implements Runnable {
 				int threads = threadsfinished.incrementAndGet();
 				break;
 			}else{done=false;}
-		//	System.out.println(wordcount.get());
 			while (!temp.dropped()) {
+				if(reset){
+					break;
+				}
 				while (pause) {
 					try {
 						Thread.sleep(100);
@@ -104,11 +107,25 @@ public class WordPanel extends JPanel implements Runnable {
 			if(temp.dropped()){
 				this.score.missedWord();
 			}
+			if(reset){
+				wordcount = new AtomicInteger(0);
+				threadsfinished = new AtomicInteger(0);
+				done=false;
+				reset=false;
+				score = new Score();
+				break;
+			}
 			missed.setText("Missed: " + score.getMissed() + "    ");
+			caught.setText("Caught:" + score.getCaught() + "    ");
+			scr.setText("Score:" + score.getScore() + "    ");
 			temp.resetWord();
 			repaint();
 		}
-	//	repaint();
+		missed.setText("Missed: " + score.getMissed() + "    ");
+		caught.setText("Caught:" + score.getCaught() + "    ");
+		scr.setText("Score:" + score.getScore() + "    ");
+		words[v].resetWord();
+		repaint();
 	}
 }
 

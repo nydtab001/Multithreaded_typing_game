@@ -9,6 +9,7 @@ import java.io.IOException;
 
 import java.util.Scanner;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 //model is separate from the view.
 
 public class WordApp {
@@ -118,12 +119,14 @@ public class WordApp {
 		   public void actionPerformed(ActionEvent e)
 		   {
 		      //[snip]
-			   w = new WordPanel(words,yLimit);
-			   for (int i = 0; i < noWords; i++) {
-				   array[i] = new Thread(w);
-			   }
-			   for (int i = 0; i < noWords; i++) {
-				   array[i].start();
+			   start=false;
+			   already_started=false;
+			   for(int i=0;i<noWords;i++) {
+				   w.reset = true;
+				   w.wordcount = new AtomicInteger(0);
+				   w.threadsfinished = new AtomicInteger(0);
+				   w.score = new Score();
+				   w.done = false;
 			   }
 		   }
 		});
