@@ -24,7 +24,7 @@ public class WordApp {
 
 	static WordRecord[] words;
 	static volatile boolean done;  //must be volatile
-	static 	Score score = new Score();
+	public static Score score = new Score();
 
 	static WordPanel w;
 
@@ -38,7 +38,6 @@ public class WordApp {
 		Thread[] array = new Thread[noWords];
 		for (int i = 0; i < noWords; i++) {
 			array[i] = new Thread(w);
-			//	   array[i].start();
 		}
     	JFrame frame = new JFrame("WordGame"); 
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -59,6 +58,9 @@ public class WordApp {
       txt.add(caught);
 	   txt.add(missed);
 	   txt.add(scr);
+	   w.missed = missed;
+	   w.caught = caught;
+	   w.scr = scr;
     
 	    //[snip]
   
@@ -68,6 +70,7 @@ public class WordApp {
 	      public void actionPerformed(ActionEvent evt) {
 	         String text = textEntry.getText();
 	          //[snip]
+			  w.text=text;
 	         textEntry.setText("");
 	         textEntry.requestFocus();
 	      }
@@ -76,6 +79,7 @@ public class WordApp {
 	   txt.add(textEntry);
 	   txt.setMaximumSize( txt.getPreferredSize() );
 	   g.add(txt);
+	 //  w.textentry=textEntry;
 	    
 	   JPanel b = new JPanel();
       b.setLayout(new BoxLayout(b, BoxLayout.LINE_AXIS)); 
@@ -91,17 +95,9 @@ public class WordApp {
 				   array[i] = new Thread(w);
 			   }
 			   start=!start;
-			   //while(start) {
 				   for (int i = 0; i < noWords; i++) {
-					   //array[i] = new Thread(w);
 					   array[i].start();
-					//   System.out.println(array[i].isAlive());
 				   }
-			 /*  }else{
-				   for (int i = 0; i < noWords; i++) {
-					   array[i].start();
-				   }*/
-			   //}
 		      textEntry.requestFocus();  //return focus to the text entry field
 		   }
 		});

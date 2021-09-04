@@ -1,24 +1,24 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class WordPanel extends JPanel implements Runnable{
 	public static volatile boolean done;
 	public int[] j;
 	public static AtomicInteger k = new AtomicInteger(0);
 	public WordRecord[] words;
+	public volatile String text = "";
 	private int noWords;
 	private int maxY;
-	private WordDictionary d;
+	public volatile Score score = new Score();
+	public volatile JLabel missed = new JLabel("Missed:" + score.getMissed() + "    ");
+	public volatile JLabel caught = new JLabel("Caught:" + score.getCaught() + "    ");
+	public volatile JLabel scr=new JLabel("Score:" + score.getScore()+ "    ");;
 
-		
+
 		public void paintComponent(Graphics g) {
 		    int width = getWidth();
 		    int height = getHeight();
@@ -33,7 +33,7 @@ public class WordPanel extends JPanel implements Runnable{
 		    for (int i=0;i<noWords;i++){	    	
 		    	//g.drawString(words[i].getWord(),words[i].getX(),words[i].getY());
 				j[i]=i;
-		    	g.drawString(words[i].getWord(),words[i].getX(),words[i].getY()+20);  //y-offset for skeleton so that you can see the words
+		    	g.drawString(words[i].getWord(),words[i].getX(),words[i].getY());  //y-offset for skeleton so that you can see the words
 		    }
 		   
 		  }
@@ -45,26 +45,34 @@ public class WordPanel extends JPanel implements Runnable{
 			this.maxY=maxY;
 			j = new int[noWords];
 		}
-		
-		public void run() {
+
+	public void run() {
 			//add in code to animate this
-			while(true) {
-				int v = k.getAndIncrement();
-				if (v >= noWords) {
+				int v;
+				if (k.get() >= noWords) {
 					k = new AtomicInteger(0);
-					v = k.getAndIncrement();
 				}
+				v = k.getAndIncrement();
+			while(true) {
 				WordRecord temp = words[v];
 				while (!temp.dropped()) {
-					temp.drop(10);
+					if(temp.matchWord(text)){
+						this.score.caughtWord(text.length());
+						caught.setText("Caught:" + score.getCaught() + "    ");
+						scr.setText("Score:" + score.getScore()+ "    ");
+					}
+					temp.drop(1);
 					repaint();
 					try {
-						Thread.sleep(temp.getSpeed());
+						Thread.sleep((long) (0.02*temp.getSpeed()));
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 				}
-				words[v].resetWord();
+                this.score.missedWord();
+				missed.setText("Missed: " + score.getMissed() + "    ");
+				temp.resetWord();
+				repaint();
 			}
 		}
 
