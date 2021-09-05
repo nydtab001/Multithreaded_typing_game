@@ -160,14 +160,6 @@ public class WordApp {
 		   public void actionPerformed(ActionEvent e)
 		   {
 		      //[snip]
-			/*     if(start & already_started) {
-                     w.pause = true;
-                     start=false;
-                 }
-			  /*   else if(!start & already_started){
-			         w.pause = false;
-			         start = true;
-                 }*/
 			   start=false;
 			   already_started=false;
 			   w.reset=true;

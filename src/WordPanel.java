@@ -89,8 +89,6 @@ public class WordPanel extends JPanel implements Runnable {
 			k = new AtomicInteger(0);
 		}
 		v = k.getAndIncrement();
-	//	wordcount = new AtomicInteger(0);
-	//	threadsfinished = new AtomicInteger(0);
 		while (true) {
 			WordRecord temp = words[v];
 			if(wordcount.incrementAndGet()>totalwords){
