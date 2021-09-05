@@ -32,12 +32,13 @@ public class WordApp {
 	static boolean start = false;
 	static boolean already_started = false;
 	static boolean pause = true;
+	static Thread[] array;
 	
 	
 	
 	public static void setupGUI(int frameX,int frameY,int yLimit) {
 		// Frame init and dimensions
-		Thread[] array = new Thread[noWords];
+		array = new Thread[noWords];
 		for (int i = 0; i < noWords; i++) {
 			array[i] = new Thread(w);
 		}
@@ -64,6 +65,9 @@ public class WordApp {
 	   w.caught = caught;
 	   w.scr = scr;
 	   w.totalwords=totalWords;
+        for (int i = 0; i < noWords; i++) {
+            array[i] = new Thread(w);
+        }
     
 	    //[snip]
   
@@ -85,7 +89,7 @@ public class WordApp {
 	    
 	   JPanel b = new JPanel();
       b.setLayout(new BoxLayout(b, BoxLayout.LINE_AXIS)); 
-	   JButton startB = new JButton("Start/Pause");;
+	   JButton startB = new JButton("Start/Restart");;
 		
 			// add the listener to the jbutton to handle the "pressed" event
 		startB.addActionListener(new ActionListener()
@@ -93,25 +97,29 @@ public class WordApp {
 		   public void actionPerformed(ActionEvent e)
 		   {
 		      //[snip]
-			   start=!start;
-			   if(start & !already_started) {
-			   		for (int i = 0; i < noWords; i++) {
-				   		array[i] = new Thread(w);
-			   		}
-				   	for (int i = 0; i < noWords; i++) {
-				   		array[i].start();
-				   	}
-				   	already_started=true;
-			   }else if(!start & already_started){
-			   		w.pause=true;
-			   }else if(start & already_started){
-			   		w.pause=false;
+			   if(!start) {
+			       start();//starts the threads
+			/*   }else if(!start & already_started){
+			   		w.pause=true;*/
+			   }else if(already_started){
+			        start=false;
+			        already_started=false;
+			        w.reset=true;
+			        for(int i=0;i<noWords;i++){
+                        try {
+                            array[i].join();
+                        } catch (InterruptedException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+			        start();
+			   		//w.pause=false;
 			   }
 
 		      textEntry.requestFocus();  //return focus to the text entry field
 		   }
 		});
-		JButton endB = new JButton("End");;
+		JButton endB = new JButton("Pause/Resume");;
 			
 				// add the listener to the jbutton to handle the "pressed" event
 		endB.addActionListener(new ActionListener()
@@ -119,20 +127,29 @@ public class WordApp {
 		   public void actionPerformed(ActionEvent e)
 		   {
 		      //[snip]
-			   start=false;
-			   already_started=false;
-			   for(int i=0;i<noWords;i++) {
-				   w.reset = true;
-				   w.wordcount = new AtomicInteger(0);
-				   w.threadsfinished = new AtomicInteger(0);
-				   w.score = new Score();
-				   w.done = false;
-			   }
+			     if(start & already_started) {
+                     w.pause = true;
+                     start=false;
+                 }
+			     else if(!start & already_started){
+			         w.pause = false;
+			         start = true;
+                 }
 		   }
 		});
+
+		JButton quitB = new JButton("Quit");
+		quitB.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+            }
+        });
 		
 		b.add(startB);
 		b.add(endB);
+		b.add(quitB);
 		
 		g.add(b);
     	
@@ -142,6 +159,18 @@ public class WordApp {
        	//frame.pack();  // don't do this - packs it into small space
       frame.setVisible(true);
 	}
+
+	public static void start(){
+	    w.reset=false;
+        for (int i = 0; i < noWords; i++) {
+            array[i] = new Thread(w);
+        }
+        for (int i = 0; i < noWords; i++) {
+            array[i].start();
+        }
+        start=!start;
+        already_started = true;
+    }
 
    public static String[] getDictFromFile(String filename) {
 		String [] dictStr = null;

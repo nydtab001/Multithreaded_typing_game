@@ -111,7 +111,6 @@ public class WordPanel extends JPanel implements Runnable {
 				wordcount = new AtomicInteger(0);
 				threadsfinished = new AtomicInteger(0);
 				done=false;
-				reset=false;
 				score = new Score();
 				break;
 			}
@@ -127,6 +126,7 @@ public class WordPanel extends JPanel implements Runnable {
 		words[v].resetWord();
 		repaint();
 	}
+
 }
 
 
