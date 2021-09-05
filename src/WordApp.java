@@ -33,8 +33,14 @@ public class WordApp {
 	static boolean already_started = false;
 	static boolean pause = true;
 	static Thread[] array;
-	
-	
+
+	/**
+	 * This method setsup the GUI display of the program with all panels and button events
+	 *
+	 * @param frameX is the with of the display
+	 * @param frameY is the height of the display
+	 * @param yLimit is the maximum height at which words are visible
+	 */
 	
 	public static void setupGUI(int frameX,int frameY,int yLimit) {
 		// Frame init and dimensions
@@ -70,11 +76,21 @@ public class WordApp {
         }
     
 	    //[snip]
-  
-	   final JTextField textEntry = new JTextField("",20);
+
+		/**
+		 *
+		 */
+
+		final JTextField textEntry = new JTextField("",20);
 	   textEntry.addActionListener(new ActionListener()
 	   {
-	      public void actionPerformed(ActionEvent evt) {
+
+		   /**
+			* This method is called when text is entered in the textfeild
+			*
+			* @param evt is the event action event being listened for
+			*/
+		   public void actionPerformed(ActionEvent evt) {
 			  //[snip]
 			  w.text= textEntry.getText();
 	         textEntry.setText("");
@@ -94,6 +110,15 @@ public class WordApp {
 			// add the listener to the jbutton to handle the "pressed" event
 		startB.addActionListener(new ActionListener()
 		{
+
+			/**
+			 * This method is called when the start/restart button is pressed.
+			 * This button is used to start the game by starting the individual threads and restart the threads
+			 * when the button is pressed again.
+			 *
+			 * @param e is the button interrupt used to trigger this method
+			 */
+
 		   public void actionPerformed(ActionEvent e)
 		   {
 		      //[snip]
@@ -124,6 +149,14 @@ public class WordApp {
 				// add the listener to the jbutton to handle the "pressed" event
 		endB.addActionListener(new ActionListener()
 		{
+
+			/**
+			 * This is the method called when the End button is pressed. This button is used to halt the game.
+			 * When this button is pressed the threads are blocked.
+			 *
+			 * @param e is the button interrupt used to trigger this method
+			 */
+
 		   public void actionPerformed(ActionEvent e)
 		   {
 		      //[snip]
@@ -151,7 +184,14 @@ public class WordApp {
 		JButton quitB = new JButton("Quit");
 		quitB.addActionListener(new ActionListener()
         {
-            @Override
+
+			/**
+			 * This is the method called when the Quit button is pressed. When the button is pressed, the program terminates.
+			 *
+			 * @param e is the button interrupt used to trigger this method
+			 */
+
+			@Override
             public void actionPerformed(ActionEvent e) {
 				System.exit(0);
             }
@@ -170,6 +210,11 @@ public class WordApp {
       frame.setVisible(true);
 	}
 
+	/**
+	 * This is the method is used to start each thread and is called by the start/restart button.
+	 *
+	 */
+
 	public static void start(){
 	    w.reset=false;
         for (int i = 0; i < noWords; i++) {
@@ -182,7 +227,14 @@ public class WordApp {
         already_started = true;
     }
 
-   public static String[] getDictFromFile(String filename) {
+	/**
+	 * This method is used the fetch data from a file and use it to populate ann array of strings
+	 *
+	 * @param filename is the file input
+	 * @return returns the string array output
+	 */
+
+	public static String[] getDictFromFile(String filename) {
 		String [] dictStr = null;
 		try {
 			Scanner dictReader = new Scanner(new FileInputStream(filename));
@@ -200,6 +252,13 @@ public class WordApp {
 	    }
 		return dictStr;
 	}
+
+	/**
+	 * This is the main method that executes the program.
+	 *
+	 * @param args are the command ine parameters used for input where the first is the total number of words to fall
+	 * the second is the number of words displayed each time and the third is the input file.
+	 */
 
 	public static void main(String[] args) {
     	

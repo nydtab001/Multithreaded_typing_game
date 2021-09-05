@@ -23,6 +23,12 @@ public class WordPanel extends JPanel implements Runnable {
 	public AtomicInteger threadsfinished = new AtomicInteger(0);
 	public volatile boolean reset = false;
 
+	/**
+	 * This is the method that dipslays components on the screen and is the method that displays the screen output
+	 * atany given time
+	 *
+	 * @param g is the Graphics input
+	 */
 
 	public void paintComponent(Graphics g) {
 		int width = getWidth();
@@ -55,6 +61,13 @@ public class WordPanel extends JPanel implements Runnable {
 
 	}
 
+	/**
+	 * This is the constructor of the class where the instance variables are initialized
+	 *
+	 * @param words is the input array of the words
+	 * @param maxY is the input y_limit from the WordApp class
+	 */
+
 	WordPanel(WordRecord[] words, int maxY) {
 		this.words = words; //will this work?
 		noWords = words.length;
@@ -62,6 +75,12 @@ public class WordPanel extends JPanel implements Runnable {
 		this.maxY = maxY;
 		j = new int[noWords];
 	}
+
+	/**
+	 * This is the method that executes when each thread is started. It is also where the main computations
+	 * for the animation are done.
+	 *
+	 */
 
 	public void run() {
 		//add in code to animate this
