@@ -119,7 +119,7 @@ public class WordApp {
 		      textEntry.requestFocus();  //return focus to the text entry field
 		   }
 		});
-		JButton endB = new JButton("Pause/Resume");;
+		JButton endB = new JButton("End");;
 			
 				// add the listener to the jbutton to handle the "pressed" event
 		endB.addActionListener(new ActionListener()
@@ -127,14 +127,24 @@ public class WordApp {
 		   public void actionPerformed(ActionEvent e)
 		   {
 		      //[snip]
-			     if(start & already_started) {
+			/*     if(start & already_started) {
                      w.pause = true;
                      start=false;
                  }
-			     else if(!start & already_started){
+			  /*   else if(!start & already_started){
 			         w.pause = false;
 			         start = true;
-                 }
+                 }*/
+			   start=false;
+			   already_started=false;
+			   w.reset=true;
+			   for(int i=0;i<noWords;i++){
+				   try {
+					   array[i].join();
+				   } catch (InterruptedException ex) {
+					   ex.printStackTrace();
+				   }
+			   }
 		   }
 		});
 

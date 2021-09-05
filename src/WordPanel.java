@@ -44,6 +44,13 @@ public class WordPanel extends JPanel implements Runnable {
 			g.drawString("Caught: "+score.getCaught(),400,210);
 			g.drawString("Missed: "+score.getMissed(),400,234);
 			g.drawString("Your score: "+score.getScore(),400,258);
+			threadsfinished= new AtomicInteger(0);
+			wordcount = new AtomicInteger(0);
+			done=false;
+			score = new Score();
+			missed.setText("Missed: " + score.getMissed() + "    ");
+			caught.setText("Caught:" + score.getCaught() + "    ");
+			scr.setText("Score:" + score.getScore() + "    ");
 		}
 
 	}
