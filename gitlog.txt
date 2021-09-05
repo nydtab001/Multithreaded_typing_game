@@ -1,0 +1,90 @@
+$ git log
+commit 124c56877f92d4689fa9f986a768369f5eac6412 (HEAD -> master, origin/master)
+Author: nydtab001 <nydtab001@myuct.ac.za>
+Date:   Sun Sep 5 15:07:21 2021 +0200
+
+    altered
+
+commit 982580df6a4c515f45c1073b693c64f8ccdd9a5b
+Author: nydtab001 <nydtab001@myuct.ac.za>
+Date:   Sun Sep 5 14:43:48 2021 +0200
+
+    added readme
+
+commit 44b144c296da796bef2eea2e37b413e76299a723
+Author: nydtab001 <nydtab001@myuct.ac.za>
+Date:   Sun Sep 5 13:17:11 2021 +0200
+
+    added makefile
+
+commit 72229812332f5b7dee147d4eeabdddfe6763ac62
+Author: nydtab001 <nydtab001@myuct.ac.za>
+Date:   Sun Sep 5 11:55:49 2021 +0200
+
+    added quit button
+:...skipping...
+commit 124c56877f92d4689fa9f986a768369f5eac6412 (HEAD -> master, origin/master)
+Author: nydtab001 <nydtab001@myuct.ac.za>
+Date:   Sun Sep 5 15:07:21 2021 +0200
+
+    altered
+
+commit 982580df6a4c515f45c1073b693c64f8ccdd9a5b
+Author: nydtab001 <nydtab001@myuct.ac.za>
+Date:   Sun Sep 5 14:43:48 2021 +0200
+
+    added readme
+
+commit 44b144c296da796bef2eea2e37b413e76299a723
+Author: nydtab001 <nydtab001@myuct.ac.za>
+Date:   Sun Sep 5 13:17:11 2021 +0200
+
+    added makefile
+
+commit 72229812332f5b7dee147d4eeabdddfe6763ac62
+Author: nydtab001 <nydtab001@myuct.ac.za>
+Date:   Sun Sep 5 11:55:49 2021 +0200
+
+    added quit button
+
+commit f504d73dfe2ee6016de78a19804e51f34d5ab79a
+Author: nydtab001 <nydtab001@myuct.ac.za>
+Date:   Sat Sep 4 22:57:42 2021 +0200
+
+    added end button
+
+commit e9e5c98805d9e348bb6480a851bb0fd013324d29
+Author: nydtab001 <nydtab001@myuct.ac.za>
+Date:   Sat Sep 4 20:50:45 2021 +0200
+
+    added finish
+
+commit 9e756d3f78a763a60b272887dac1e2dd2c83958d
+Author: nydtab001 <nydtab001@myuct.ac.za>
+Date:   Sat Sep 4 04:42:11 2021 +0200
+
+    added score and counter
+
+commit 41d8f69ce41e4f43f35d1b24f380aa32da15c923
+Author: nydtab001 <nydtab001@myuct.ac.za>
+Date:   Wed Sep 1 03:54:56 2021 +0200
+
+    added infinite falling words
+
+commit 857423f279bf1cc0213fb710914308163382ef24
+Author: nydtab001 <nydtab001@myuct.ac.za>
+Date:   Tue Aug 31 21:09:32 2021 +0200
+
+    added falling words
+
+commit 4a402caad9f559837f361c66741fce048e7ccdfa
+Author: nydtab001 <nydtab001@myuct.ac.za>
+Date:   Tue Aug 31 16:45:38 2021 +0200
+
+    second commit
+
+commit 4af1e722dc863fed607ceffc21dfd7f8759a253e
+Author: nydtab001 <nydtab001@myuct.ac.za>
+Date:   Mon Aug 30 23:08:45 2021 +0200
+
+    first commit
