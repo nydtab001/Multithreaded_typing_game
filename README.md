@@ -1,5 +1,5 @@
 # Mutlithreaded Typing Game
-Contributor: Taboka Nyadza
+Contributor: Taboka Nyadza<br/>
 Date: 05/09/2021
 
 The purpose of this project is to create a 2D typing game using multithreading, that displays random words to be typed before reaching the bottom. The random words data is generated from an input dictionary file.
