@@ -4,7 +4,7 @@ Date: 05/09/2021
 
 The purpose of this project is to create a 2D typing game using multithreading, that displays random words to be typed before reaching the bottom. The random words data is generated from an input dictionary file.
 
-## Performing the experiment
+## Running the game
 
 The makefile used to run this project is designed for Linux systems and the execution is done as follows:
 
