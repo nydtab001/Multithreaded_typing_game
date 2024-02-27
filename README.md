@@ -12,6 +12,6 @@ a. Place the input file to be used in the main folder where the make file is loc
 
 b. Run the command "make" to compile the project
 
-c. Run the command "make run v1=<total words> v2=<words on screen> v3=<dictionary file>" to run the program
+c. Run the command "make run v1=(total word)> v2=(words on screen) v3=(dictionary file)" to run the program
 
 e. Use the command "make clean" to remove the compiled classes
